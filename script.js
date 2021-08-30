@@ -1,30 +1,30 @@
-//observando o eveto de digitar, keyup(quando solta a tecla)
-//essa função recebe os dados do próprios evento
+// Colocamos um evento no body para escutar as teclas digitadas
 document.body.addEventListener('keyup', (event) => {
-    playSound(event.code.toLowerCase())//pegando o código da tecla que foi pressionada
+    playSound(event.code.toLowerCase())
 })
 
 //colocando um evento de clique ao botão
 document.querySelector('.composer button').addEventListener('click', () => {
-    let song = document.querySelector('#input').value //até aqui sabemos o que o usuário digitou no input
+    let song = document.querySelector('#input').value
 
     if(song !== ''){
-        let songArray = song.split('')// separando cada letra em um item do array
+        let songArray = song.split('') //Criamos um array com as teclas digitadas
         playComposition(songArray)
     }
 })
 
 //para facilitar deixamos os audios com os mesmos códigos das teclas
 function playSound(sound){
-    let audioElement = document.querySelector(`#s_${sound}`)//selecionando o elemento de som
+    let audioElement = document.querySelector(`#s_${sound}`)//selecionando o elemento de audio
     let keyElement = document.querySelector(`div[data-key="${sound}"]`)//selecionando visualmente a tecla digitada
 
+    //Não aguarda o áudio finalizar para iniciar novamente
     if(audioElement){
-        audioElement.currentTime = 0 //caso o audio esteja em execução ele zera o audio e executa novamente
+        audioElement.currentTime = 0 
         audioElement.play()
     }
 
-    //caso exista, adicionamos uma classe para estilizar o elemento
+    //efeito visual no elemento
     if(keyElement){
         keyElement.classList.add('active')
 
@@ -37,7 +37,7 @@ function playSound(sound){
 function playComposition(songArray){
     let wait = 0
 
-    // pega o array de teclas digitadas e itera sobre elas tocando o som com um intervalo
+    //itera sobre o array de teclas digitadas
     for(let songItem of songArray){
         setTimeout(() => {
             playSound(`key${songItem}`)
